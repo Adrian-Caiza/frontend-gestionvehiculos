@@ -46,19 +46,20 @@ const clientesFields = [
 ];
 
 // CONFIGURACIÓN DE RESERVAS 
+
 const reservasColumns = [
-  { key: 'code', label: 'Código Reserva' },
-  { key: 'clieId', label: 'ID Cliente' },
-  { key: 'vehId', label: 'ID Vehículo' },
-  { key: 'status', label: 'Estado' }
+  { key: 'codigo', label: 'CÓDIGO RESERVA' },
+  { key: 'clienteId', label: 'ID CLIENTE' },
+  { key: 'vehiculoId', label: 'ID VEHÍCULO' },
+  { key: 'estado', label: 'ESTADO' }
 ];
 
+
 const reservasFields = [
-  { name: 'code', label: 'Código', type: 'text', required: true },
-  { name: 'description', label: 'Descripción', type: 'text', required: true },
-  { name: 'clieId', label: 'Seleccionar Cliente', type: 'select', apiOptions: 'clientes', required: true },
-  { name: 'vehId', label: 'Seleccionar Vehículo', type: 'select', apiOptions: 'vehiculos', required: true }
-  
+  { name: 'codigo', label: 'Código de Reserva', type: 'text', required: true },
+  { name: 'clienteId', label: 'Seleccionar Cliente', type: 'select', apiOptions: 'clientes', required: true },
+  { name: 'vehiculoId', label: 'Seleccionar Vehículo', type: 'select', apiOptions: 'vehiculos', required: true },
+  { name: 'estado', label: 'Estado de Reserva', type: 'text', required: true } // O puedes hacerlo tipo 'select' con opciones fijas
 ];
 
 function App() {
