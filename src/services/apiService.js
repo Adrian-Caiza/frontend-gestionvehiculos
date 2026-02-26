@@ -12,7 +12,7 @@ const api = axios.create({
 
 export const apiService = {
   login: async () => {
-    // Simulamos un login exitoso directo para esta emergencia
+    
     return { token: "token-salvavidas", name: "Usuario", last: "Admin" }; 
   },
 

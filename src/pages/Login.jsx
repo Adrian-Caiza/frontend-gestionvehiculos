@@ -4,8 +4,9 @@ import apiService from '../services/apiService';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState(''); 
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('prueba@correo.com'); 
+  const [password, setPassword] = useState('miPassword123');
+
   const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
