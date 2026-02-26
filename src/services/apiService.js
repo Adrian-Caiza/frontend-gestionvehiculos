@@ -1,51 +1,51 @@
 import axios from 'axios';
 
 
-const API_URL = 'http://localhost:8080/api'; 
+const API_URL = 'https://crudcrud.com/api/911d1e40e80544a1a6c8f935f000177c'; 
 
 const api = axios.create({
   baseURL: API_URL,
-});
-
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('userToken');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
+  headers: {
+    'Content-Type': 'application/json'
+  },
 });
 
 export const apiService = {
-  login: async (credentials) => {
-    
-    const { data } = await api.post('/auth/login', credentials); 
-    return data;
+  login: async () => {
+    // Simulamos un login exitoso directo para esta emergencia
+    return { token: "token-salvavidas", name: "Usuario", last: "Admin" }; 
   },
 
   getAll: async (endpointName) => {
-    
-    const { data } = await api.get(`/${endpointName}/listar`); 
-    return data;
-  },
-
-  create: async (endpointName, payload) => {
-    
-    const suffix = endpointName === 'reservas' ? '/crear' : '/registrar'; 
-    const { data } = await api.post(`/${endpointName}${suffix}`, payload);
-    return data;
-  },
-
-  update: async (endpointName, payload) => {
-    
-    if (endpointName === 'reservas') {
-      const { data } = await api.patch(`/${endpointName}/estado/${payload.id}`, { status: payload.status });
-      return data;
+    try {
+      const response = await api.get(`/${endpointName}`);
+      
+      return response.data.map(item => ({ ...item, id: item._id }));
+    } catch (e) {
+      return []; 
     }
-    throw new Error("El backend no soporta actualización general para este módulo.");
+  },
+
+  create: async (endpointName, data) => {
+    const response = await api.post(`/${endpointName}`, data);
+    return response.data;
+  },
+
+  update: async (endpointName, data) => {
+    const id = data.id || data._id;
+    const payload = { ...data };
+    
+    
+    delete payload.id; 
+    delete payload._id;
+    
+    const response = await api.put(`/${endpointName}/${id}`, payload);
+    return response.data;
   },
 
   delete: async (endpointName, id) => {
-    
-    const { data } = await api.delete(`/${endpointName}/eliminar/${id}`); 
-    return data;
+    const response = await api.delete(`/${endpointName}/${id}`);
+    return response.data;
   }
 };
 
