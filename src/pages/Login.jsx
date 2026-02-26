@@ -19,7 +19,7 @@ const Login = () => {
       localStorage.setItem('userToken', data.token);
       localStorage.setItem('userName', nombreFinal);
       localStorage.setItem('userImage', data.imgBase64 || '');
-      navigate('/materias'); 
+      navigate('/vehiculos'); 
     } catch (err) {
       console.error(err);
       setError('Usuario o contraseña incorrectos.');
