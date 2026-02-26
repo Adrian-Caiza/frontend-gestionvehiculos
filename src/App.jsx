@@ -71,7 +71,7 @@ function App() {
           <Route path="/" element={<Navigate to="/vehiculos" replace />} />
           <Route path="/vehiculos" element={<CrudView moduleName="Vehículos" endpointName="vehiculos" tableColumns={vehiculosColumns} formFields={vehiculosFields} hideEdit={true} />} />
           <Route path="/clientes" element={<CrudView moduleName="Clientes" endpointName="clientes" tableColumns={clientesColumns} formFields={clientesFields} hideEdit={true} />} />
-          <Route path="/reservas" element={<CrudView moduleName="Reservas" endpointName="reservas" tableColumns={reservasColumns} formFields={reservasFields} hideEdit={true} />} />
+          <Route path="/reservas" element={<CrudView moduleName="Reservas" endpointName="reservas" tableColumns={reservasColumns} formFields={reservasFields} />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
