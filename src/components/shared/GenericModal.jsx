@@ -53,13 +53,11 @@ const GenericModal = ({ isOpen, onClose, onSubmit, title, fields, initialData })
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden animate-fade-in-up">
         
-        
         <div className="flex justify-between items-center p-5 border-b border-gray-100 bg-gray-50">
           <h3 className="text-xl font-bold text-gray-800 m-0">{title}</h3>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl font-bold transition">&times;</button>
         </div>
 
-        
         <div className="p-6 overflow-y-auto">
           <form id="generic-form" onSubmit={handleSubmit} className="flex flex-col gap-4">
             {fields.map((field, index) => (
@@ -74,18 +72,32 @@ const GenericModal = ({ isOpen, onClose, onSubmit, title, fields, initialData })
                 ) : field.type === 'select' ? (
                   <select name={field.name} value={formData[field.name] || ''} onChange={handleChange} required={field.required} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white">
                     <option value="">Seleccione...</option>
-                    {optionsData[field.name]?.map(opt => (
-                      <option key={opt.id} value={opt.id}>{opt.nombre} {opt.apellido || ''} {opt.identificacion ? `(${opt.identificacion})` : ''}</option>
-                    ))}
+                    {optionsData[field.name]?.map(opt => {
+                      
+                      const title = opt.name || opt.brand || opt.nombre || '';
+                      const subtitle = opt.last || opt.model || opt.apellido || '';
+                      const extra = opt.identification || opt.plate || opt.identificacion || '';
+                      return (
+                        <option key={opt.id} value={opt.id}>
+                          {title} {subtitle} {extra ? `(${extra})` : ''}
+                        </option>
+                      );
+                    })}
                   </select>
                 ) : field.type === 'multi-select' ? (
                   <select multiple name={field.name} value={formData[field.name] || []} onChange={(e) => handleMultiSelect(e, field.name)} required={field.required} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white h-24">
-                    {optionsData[field.name]?.map(opt => (
-                      <option key={opt.id} value={opt.id}>{opt.nombre} ({opt.codigo || opt.id})</option>
-                    ))}
+                    {optionsData[field.name]?.map(opt => {
+                      
+                      const title = opt.name || opt.brand || opt.nombre || '';
+                      const code = opt.code || opt.plate || opt.codigo || opt.id || '';
+                      return (
+                        <option key={opt.id} value={opt.id}>
+                          {title} ({code})
+                        </option>
+                      );
+                    })}
                   </select>
                 ) : (
-                  
                   <input 
                     type={field.type || 'text'} 
                     name={field.name} 
@@ -104,7 +116,6 @@ const GenericModal = ({ isOpen, onClose, onSubmit, title, fields, initialData })
           </form>
         </div>
 
-        
         <div className="p-5 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
           <button type="button" onClick={onClose} className="px-5 py-2 rounded-lg text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 font-semibold transition shadow-sm">Cancelar</button>
           <button type="submit" form="generic-form" className="px-5 py-2 rounded-lg text-white bg-blue-600 hover:bg-blue-700 font-bold transition shadow-sm">Guardar</button>
@@ -116,4 +127,3 @@ const GenericModal = ({ isOpen, onClose, onSubmit, title, fields, initialData })
 };
 
 export default GenericModal;
-
